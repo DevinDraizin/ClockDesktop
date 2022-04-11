@@ -49,14 +49,14 @@ public class clock extends Pane {
         this.hand2Speed = speed;
     }
 
-    public clock(float size, float radius) {
+    public clock(float size) {
         this.size = size;
-        this.radius = radius;
+        this.radius = size/2;
         this.hand1Angle = 0;
         this.hand2Angle = 0;
         //Default speed in degrees per second
-        this.hand1Speed = 20;
-        this.hand2Speed = 20;
+        this.hand1Speed = 25;
+        this.hand2Speed = 25;
 
         //Prevent Pane from resizing
         this.setMinHeight(size);
@@ -69,7 +69,7 @@ public class clock extends Pane {
 
     private void initializeClock() {
         this.clockBody = drawCircle();
-        this.clockPivot = new Circle(this.size/2,this.size/2,16,Paint.valueOf("black"));
+        this.clockPivot = new Circle(this.size/2,this.size/2,(size*.06),Paint.valueOf("black"));
         this.hand1 = drawHand(1);
         this.hand2 = drawHand(2);
 
@@ -136,7 +136,7 @@ public class clock extends Pane {
         hand.setStartY(this.size/2);
 
         hand.setEndX(this.size/2);
-        hand.setEndY(30);
+        hand.setEndY(size*.9);
 
         if(handNum == 1) {
             this.hand1Rotation = new Rotate();

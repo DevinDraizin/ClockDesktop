@@ -8,8 +8,6 @@ import java.util.Objects;
 
 public class main extends Application {
 
-
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -17,11 +15,11 @@ public class main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         window.setTitle("Clock Desktop");
-        window.setHeight(1000);
-        window.setWidth(1000);
+        window.setMaximized(true);
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/UI/DriverLayout.fxml")));
         Scene scene = new Scene(root);
         window.setScene(scene);
         window.show();
+
     }
 }
