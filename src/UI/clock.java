@@ -33,6 +33,8 @@ public class clock extends Pane {
     private final float size;
     private final float radius;
 
+    private volatile boolean isMoving = false;
+
     public enum HandNum {
         HAND1,HAND2
     }
@@ -49,14 +51,19 @@ public class clock extends Pane {
         this.hand2Speed = speed;
     }
 
+    public boolean getIsMoving() {
+        return isMoving;
+    }
+
     public clock(float size) {
         this.size = size;
         this.radius = size/2;
         this.hand1Angle = 0;
         this.hand2Angle = 0;
+
         //Default speed in degrees per second
-        this.hand1Speed = 25;
-        this.hand2Speed = 25;
+        this.hand1Speed = 20;
+        this.hand2Speed = 20;
 
         //Prevent Pane from resizing
         this.setMinHeight(size);
@@ -97,6 +104,7 @@ public class clock extends Pane {
     }
 
     public void moveHandToAngle(float angle, HandNum hand) {
+        isMoving = true;
 
         if(hand == HandNum.HAND1) {
             float duration = (Math.abs(this.hand1Angle - angle)/this.hand1Speed);
@@ -105,6 +113,7 @@ public class clock extends Pane {
                     new KeyFrame(Duration.ZERO, new KeyValue(this.hand1Rotation.angleProperty(), this.hand1Angle)),
                     new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand1Rotation.angleProperty(), angle)));
 
+            this.hand1Animation.setOnFinished(e -> isMoving = false);
             this.hand1Animation.play();
             this.hand1Angle = angle;
         }else {
@@ -114,6 +123,7 @@ public class clock extends Pane {
                     new KeyFrame(Duration.ZERO, new KeyValue(this.hand1Rotation.angleProperty(), this.hand2Angle)),
                     new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand2Rotation.angleProperty(), angle)));
 
+            this.hand2Animation.setOnFinished(e -> isMoving = false);
             this.hand2Animation.play();
             this.hand2Angle = angle;
         }
