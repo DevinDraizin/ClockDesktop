@@ -1,3 +1,5 @@
+package UI;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -71,7 +73,7 @@ public class clock extends Pane {
         this.hand1 = drawHand(1);
         this.hand2 = drawHand(2);
 
-        getStylesheets().add("clockStyle.css");
+        getStylesheets().add("UI/clockStyle.css");
 
         this.clockBody.setId("clockFace");
         this.clockPivot.setId("clockPivot");
