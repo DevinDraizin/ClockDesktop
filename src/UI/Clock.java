@@ -10,7 +10,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-public class clock extends Pane {
+public class Clock extends Pane {
 
     private Rotate hand1Rotation;
     private Rotate hand2Rotation;
@@ -47,7 +47,7 @@ public class clock extends Pane {
         return isMoving;
     }
 
-    public clock(float size) {
+    public Clock(float size) {
         this.size = size;
         this.radius = size/2;
 
