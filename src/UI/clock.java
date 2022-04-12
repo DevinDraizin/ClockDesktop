@@ -12,16 +12,8 @@ import javafx.util.Duration;
 
 public class clock extends Pane {
 
-    private Line hand1;
-    private Line hand2;
-    private Circle clockBody;
-    private Circle clockPivot;
-
     private Rotate hand1Rotation;
     private Rotate hand2Rotation;
-
-    private Timeline hand1Animation;
-    private Timeline hand2Animation;
 
     private float hand1Angle;
     private float hand2Angle;
@@ -58,6 +50,8 @@ public class clock extends Pane {
     public clock(float size) {
         this.size = size;
         this.radius = size/2;
+
+        //Default hand angle
         this.hand1Angle = 0;
         this.hand2Angle = 0;
 
@@ -75,32 +69,29 @@ public class clock extends Pane {
     }
 
     private void initializeClock() {
-        this.clockBody = drawCircle();
-        this.clockPivot = new Circle(this.size/2,this.size/2,(size*.06),Paint.valueOf("black"));
-        this.hand1 = drawHand(1);
-        this.hand2 = drawHand(2);
+        Circle clockBody = drawCircle();
+        Circle clockPivot = new Circle(this.size/2,this.size/2,(size * .06),Paint.valueOf("black"));
+        Line hand1 = drawHand(1);
+        Line hand2 = drawHand(2);
 
         getStylesheets().add("UI/clockStyle.css");
 
-        this.clockBody.setId("clockFace");
-        this.clockPivot.setId("clockPivot");
-        this.hand1.setId("hand1");
-        this.hand2.setId("hand2");
+        //CSS ids
+        clockBody.setId("clockFace");
+        clockPivot.setId("clockPivot");
+        hand1.setId("hand1");
+        hand2.setId("hand2");
 
-        this.getChildren().addAll(clockBody, hand1,hand2,clockPivot);
+        this.getChildren().addAll(clockBody, hand1, hand2, clockPivot);
     }
 
     public void rotateForTime(int seconds, HandNum hand, Direction direction) {
         float angle = seconds;
-        angle = direction == Direction.CCW ? -angle : angle;
 
-        if(hand == HandNum.HAND1) {
-            angle *= this.hand1Speed;
-            moveHandToAngle(angle,HandNum.HAND1);
-        }else {
-            angle *= this.hand2Speed;
-            moveHandToAngle(angle,HandNum.HAND2);
-        }
+        angle = direction == Direction.CCW ? -angle : angle;
+        angle *= hand == HandNum.HAND1 ? this.hand1Speed : this.hand2Speed;
+
+        moveHandToAngle(angle,hand);
     }
 
     public void moveHandToAngle(float angle, HandNum hand) {
@@ -109,22 +100,22 @@ public class clock extends Pane {
         if(hand == HandNum.HAND1) {
             float duration = (Math.abs(this.hand1Angle - angle)/this.hand1Speed);
 
-            this.hand1Animation = new Timeline(
+            Timeline hand1Animation = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(this.hand1Rotation.angleProperty(), this.hand1Angle)),
                     new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand1Rotation.angleProperty(), angle)));
 
-            this.hand1Animation.setOnFinished(e -> isMoving = false);
-            this.hand1Animation.play();
+            hand1Animation.setOnFinished(e -> isMoving = false);
+            hand1Animation.play();
             this.hand1Angle = angle;
         }else {
             float duration = (Math.abs(this.hand2Angle - angle)/this.hand2Speed);
 
-            this.hand2Animation = new Timeline(
+            Timeline hand2Animation = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(this.hand1Rotation.angleProperty(), this.hand2Angle)),
                     new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand2Rotation.angleProperty(), angle)));
 
-            this.hand2Animation.setOnFinished(e -> isMoving = false);
-            this.hand2Animation.play();
+            hand2Animation.setOnFinished(e -> isMoving = false);
+            hand2Animation.play();
             this.hand2Angle = angle;
         }
     }
