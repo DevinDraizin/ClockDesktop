@@ -11,3 +11,6 @@ synchronized movements or patterns.
 ***
 ### Status
 * Working on system for generating and managing clock animation sequences
+***
+### Dependencies
+* [JFoenix](http://www.jfoenix.com/)
