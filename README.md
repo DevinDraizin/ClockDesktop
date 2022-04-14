@@ -7,6 +7,7 @@ synchronized movements or patterns.
 ***
 ### Progress
 * Created UI.Clock in JavaFX with abstract controls and macros
+* Created Driver application to control multiple clocks at once
 ***
 ### Status
-* Working on Driver application to control multiple clocks at once
+* Working on system for generating and managing clock animation sequences
