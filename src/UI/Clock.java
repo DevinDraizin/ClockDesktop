@@ -36,6 +36,14 @@ public class Clock extends Pane {
         return isMoving;
     }
 
+    public float getHand1Angle() {
+        return hand1Angle;
+    }
+
+    public float getHand2Angle() {
+        return hand2Angle;
+    }
+
     public Clock(float size) {
         this.size = size;
         this.radius = size/2;
@@ -86,8 +94,11 @@ public class Clock extends Pane {
 
     public void runActions() {
         Timeline timeLine = new Timeline();
-        for (final ClockAction action : this.clockActions) {
-            final float duration = calculateDuration(action);
+        for(int i=0; i<this.clockActions.size(); i++) {
+
+            final ClockAction action = this.clockActions.get(i);
+            final float duration = calculateDuration(action, i);
+
             timeLine.getKeyFrames().add(new KeyFrame(Duration.seconds(duration), t -> {
                 getTimelineForHand(action, HandNum.HAND1).play();
                 getTimelineForHand(action, HandNum.HAND2).play();
@@ -97,7 +108,11 @@ public class Clock extends Pane {
     }
 
     // Currently returns the longer of the two hand animations
-    private float calculateDuration(ClockAction action) {
+    private float calculateDuration(ClockAction action, int index) {
+        // Stupid hack
+        if(index == 0) {
+            return (float).001;
+        }
         float duration1 = (Math.abs(this.hand1Angle - action.getAngle1()) / action.getSpeed1());
         float duration2 = (Math.abs(this.hand1Angle - action.getAngle2()) / action.getSpeed2());
         return Math.max(duration1, duration2);
