@@ -10,6 +10,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class Clock extends Pane {
 
     private Rotate hand1Rotation;
@@ -18,29 +20,15 @@ public class Clock extends Pane {
     private float hand1Angle;
     private float hand2Angle;
 
-    //Hand speed measured in degrees per second
-    private float hand1Speed;
-    private float hand2Speed;
-
     private final float size;
     private final float radius;
+
+    private ArrayList<ClockAction> clockActions;
 
     private volatile boolean isMoving = false;
 
     public enum HandNum {
         HAND1,HAND2
-    }
-
-    public enum Direction {
-        CW,CCW
-    }
-
-    public void setHand1Speed(float speed) {
-        this.hand1Speed = speed;
-    }
-
-    public void setHand2Speed(float speed) {
-        this.hand2Speed = speed;
     }
 
     public boolean getIsMoving() {
@@ -55,10 +43,6 @@ public class Clock extends Pane {
         this.hand1Angle = 0;
         this.hand2Angle = 0;
 
-        //Default speed in degrees per second
-        this.hand1Speed = 20;
-        this.hand2Speed = 20;
-
         //Prevent Pane from resizing
         this.setMinHeight(size);
         this.setMaxHeight(size);
@@ -66,6 +50,8 @@ public class Clock extends Pane {
         this.setMaxWidth(size);
 
         initializeClock();
+
+        this.clockActions = new ArrayList<>();
     }
 
     private void initializeClock() {
@@ -74,7 +60,7 @@ public class Clock extends Pane {
         Line hand1 = drawHand(1);
         Line hand2 = drawHand(2);
 
-        getStylesheets().add("UI/clockStyle.css");
+        getStylesheets().add("UI/CSS/clockStyle.css");
 
         //CSS ids
         clockBody.setId("clockFace");
@@ -85,38 +71,47 @@ public class Clock extends Pane {
         this.getChildren().addAll(clockBody, hand1, hand2, clockPivot);
     }
 
-    public void rotateForTime(int seconds, HandNum hand, Direction direction) {
-        float angle = seconds;
-
-        angle = direction == Direction.CCW ? -angle : angle;
-        angle *= hand == HandNum.HAND1 ? this.hand1Speed : this.hand2Speed;
-
-        moveHandToAngle(angle,hand);
+    public void addAction(ClockAction action) {
+        this.clockActions.add(action);
     }
 
-    public void moveHandToAngle(float angle, HandNum hand) {
-        isMoving = true;
+    public void clearActions() {
+        this.clockActions.clear();
+    }
 
+    public void runActions() {
+        Timeline timeLine = new Timeline();
+
+        for (final ClockAction action : this.clockActions) {
+            final float duration = (Math.abs(this.hand1Angle - action.getAngle1()) / action.getSpeed1()) +
+                    (Math.abs(this.hand1Angle - action.getAngle2()) / action.getSpeed2());
+            timeLine.getKeyFrames().add(new KeyFrame(Duration.seconds(duration), t -> {
+                getTimelineForHand(action, HandNum.HAND1).play();
+                getTimelineForHand(action, HandNum.HAND2).play();
+            }));
+        }
+        timeLine.play();
+    }
+
+    public Timeline getTimelineForHand(ClockAction action, HandNum hand) {
         if(hand == HandNum.HAND1) {
-            float duration = (Math.abs(this.hand1Angle - angle)/this.hand1Speed);
+            float duration = (Math.abs(this.hand1Angle - action.getAngle1())/action.getSpeed1());
 
             Timeline hand1Animation = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(this.hand1Rotation.angleProperty(), this.hand1Angle)),
-                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand1Rotation.angleProperty(), angle)));
+                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand1Rotation.angleProperty(), action.getAngle1())));
 
-            hand1Animation.setOnFinished(e -> isMoving = false);
-            hand1Animation.play();
-            this.hand1Angle = angle;
+            this.hand1Angle = action.getAngle1();
+            return hand1Animation;
         }else {
-            float duration = (Math.abs(this.hand2Angle - angle)/this.hand2Speed);
+            float duration = (Math.abs(this.hand2Angle - action.getAngle2())/action.getSpeed2());
 
             Timeline hand2Animation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(this.hand1Rotation.angleProperty(), this.hand2Angle)),
-                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand2Rotation.angleProperty(), angle)));
+                    new KeyFrame(Duration.ZERO, new KeyValue(this.hand2Rotation.angleProperty(), this.hand2Angle)),
+                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand2Rotation.angleProperty(), action.getAngle2())));
 
-            hand2Animation.setOnFinished(e -> isMoving = false);
-            hand2Animation.play();
-            this.hand2Angle = angle;
+            this.hand2Angle = action.getAngle2();
+            return hand2Animation;
         }
     }
 

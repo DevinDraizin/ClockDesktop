@@ -5,7 +5,7 @@ import javafx.scene.layout.GridPane;
 
 public class DriverLayoutController {
 
-    private ClockController clockController = new ClockController(80);
+    private GridController clockController = new GridController(90);
 
 
     @FXML
@@ -13,7 +13,7 @@ public class DriverLayoutController {
 
     public void initialize() {
         initializeGridLayout();
-        test();
+        testClockAction();
     }
 
     private void initializeGridLayout() {
@@ -24,18 +24,15 @@ public class DriverLayoutController {
         }
     }
 
-    private void test() {
-        for(int i=0; i<clockController.getGridHeight(); i++) {
-            for(int j=0; j<clockController.getGridWidth(); j++) {
-                if(j % 2 == 0) {
-                    clockController.getClock(i,j).rotateForTime(30, clock.HandNum.HAND1, clock.Direction.CW);
-                    clockController.getClock(i,j).rotateForTime(30, clock.HandNum.HAND2, clock.Direction.CCW);
-                }else {
-                    clockController.getClock(i,j).rotateForTime(30, clock.HandNum.HAND1, clock.Direction.CCW);
-                    clockController.getClock(i,j).rotateForTime(30, clock.HandNum.HAND2, clock.Direction.CW);
-                }
-
-            }
-        }
+    private void testClockAction() {
+        ClockAction action1 = new ClockAction(40,-40,20,20);
+        ClockAction action2 = new ClockAction(20,-20,20,20);
+        ClockAction action3 = new ClockAction(60,-60,20,20);
+        Clock clock = clockController.getClock(0,0);
+        clock.addAction(action1);
+        clock.addAction(action2);
+        clock.addAction(action3);
+        clock.runActions();
     }
+
 }
