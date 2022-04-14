@@ -29,9 +29,7 @@ public class DriverLayoutController {
         ClockAction action2 = new ClockAction(20,-20,20,20);
         ClockAction action3 = new ClockAction(60,-60,20,20);
         Clock clock = clockController.getClock(0,0);
-        clock.addAction(action1);
-        clock.addAction(action2);
-        clock.addAction(action3);
+        clock.addAllActions(action1,action2,action3);
         clock.runActions();
     }
 

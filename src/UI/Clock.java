@@ -11,6 +11,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Clock extends Pane {
 
@@ -73,6 +74,10 @@ public class Clock extends Pane {
 
     public void addAction(ClockAction action) {
         this.clockActions.add(action);
+    }
+
+    public void addAllActions(ClockAction ... actions) {
+        this.clockActions.addAll(Arrays.asList(actions));
     }
 
     public void clearActions() {
