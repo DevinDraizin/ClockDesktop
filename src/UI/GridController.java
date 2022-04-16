@@ -1,5 +1,6 @@
 package UI;
 
+// Creates, manages, and loads clock mechanics
 public class GridController {
 
     private Clock[][] clockGrid;
