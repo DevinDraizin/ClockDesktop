@@ -29,7 +29,6 @@ public class Clock extends Pane {
 
     private ArrayList<ClockAction> clockActions;
 
-
     public enum HandNum {
         HAND1,HAND2
     }
@@ -64,8 +63,8 @@ public class Clock extends Pane {
     private void initializeClock() {
         Circle clockBody = drawCircle();
         Circle clockPivot = new Circle(this.size/2,this.size/2,(size * .06),Paint.valueOf("black"));
-        Line hand1 = drawHand(1);
-        Line hand2 = drawHand(2);
+        Line hand1 = drawHand(HandNum.HAND1);
+        Line hand2 = drawHand(HandNum.HAND2);
 
         getStylesheets().add("UI/CSS/clockStyle.css");
 
@@ -150,13 +149,13 @@ public class Clock extends Pane {
 
     // Hand angles reflect position of a unit circle (0-360) degrees increasing CCW where
     // 0 degrees is at (1,0) on a unit circle.
-    private Line drawHand(int handNum) {
+    private Line drawHand(HandNum handNum) {
         Line hand = new Line();
 
         hand.setStartX(this.size/2);
         hand.setStartY(this.size/2);
 
-        if(handNum == 1) {
+        if(handNum == HandNum.HAND1) {
             this.hand1Rotation = new Rotate();
             this.hand1Rotation.pivotXProperty().bind(hand.startXProperty());
             this.hand1Rotation.pivotYProperty().bind(hand.startYProperty());
