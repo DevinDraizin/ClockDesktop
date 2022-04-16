@@ -125,8 +125,8 @@ public class Clock extends Pane {
             float duration = (Math.abs(this.hand1Angle - action.getAngle1())/action.getSpeed1());
 
             Timeline hand1Animation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(this.hand1Rotation.angleProperty(), this.hand1Angle)),
-                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand1Rotation.angleProperty(), action.getAngle1())));
+                    new KeyFrame(Duration.ZERO, new KeyValue(this.hand1Rotation.angleProperty(), -this.hand1Angle)),
+                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand1Rotation.angleProperty(), -action.getAngle1())));
 
             this.hand1Angle = action.getAngle1();
             return hand1Animation;
@@ -134,8 +134,8 @@ public class Clock extends Pane {
             float duration = (Math.abs(this.hand2Angle - action.getAngle2())/action.getSpeed2());
 
             Timeline hand2Animation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(this.hand2Rotation.angleProperty(), this.hand2Angle)),
-                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand2Rotation.angleProperty(), action.getAngle2())));
+                    new KeyFrame(Duration.ZERO, new KeyValue(this.hand2Rotation.angleProperty(), -this.hand2Angle)),
+                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand2Rotation.angleProperty(), -action.getAngle2())));
 
             this.hand2Angle = action.getAngle2();
             return hand2Animation;
@@ -152,6 +152,8 @@ public class Clock extends Pane {
         return circle;
     }
 
+    // Hand angles reflect position of a unit circle (0-360) degrees increasing CCW where
+    // 0 degrees is at (1,0) on a unit circle.
     private Line drawHand(int handNum) {
         Line hand = new Line();
 
