@@ -13,6 +13,9 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+// JavaFX Node class, and it's children (including Pane) all inherit a coordinate system where
+// the y-axis is inverted from the traditional cartesian plane. We are operating in the 4th
+// quadrant of a cartesian plane so (0,0) is in the top left and as y increases we move down.
 public class Clock extends Pane {
 
     private Rotate hand1Rotation;
@@ -26,14 +29,9 @@ public class Clock extends Pane {
 
     private ArrayList<ClockAction> clockActions;
 
-    private volatile boolean isMoving = false;
 
     public enum HandNum {
         HAND1,HAND2
-    }
-
-    public boolean getIsMoving() {
-        return isMoving;
     }
 
     public float getHand1Angle() {
@@ -58,15 +56,13 @@ public class Clock extends Pane {
         this.setMinWidth(size);
         this.setMaxWidth(size);
 
-        initializeClock();
+        this.initializeClock();
 
         this.clockActions = new ArrayList<>();
     }
 
     private void initializeClock() {
         Circle clockBody = drawCircle();
-        clockBody.setFill(Paint.valueOf("white"));
-        clockBody.setStroke(Paint.valueOf("black"));
         Circle clockPivot = new Circle(this.size/2,this.size/2,(size * .06),Paint.valueOf("black"));
         Line hand1 = drawHand(1);
         Line hand2 = drawHand(2);
@@ -111,7 +107,7 @@ public class Clock extends Pane {
 
     // Returns the longer of the two hand animations
     private float calculateDuration(ClockAction action, int index) {
-        // Stupid hack
+        // Stupid hack because animations can't be 0 duration
         if(index == 0) {
             return (float).001;
         }
