@@ -10,7 +10,7 @@ Clock sequences are stored as JSON files that can be loaded and executed in the 
 
 All angles are based on a unit circle where 0&deg; is at (1,0) increasing CCW to 360. Consequently, the default direction for a hand to move is CCW. A negative angle is treated as a positive angle but in the CW direction. Similarly, a negative speed will reverse the current direction.
 ####Format:
-```json
+```
 {
   "step1" : [
     "row1" : [
