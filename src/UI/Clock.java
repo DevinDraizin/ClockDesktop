@@ -65,6 +65,8 @@ public class Clock extends Pane {
 
     private void initializeClock() {
         Circle clockBody = drawCircle();
+        clockBody.setFill(Paint.valueOf("white"));
+        clockBody.setStroke(Paint.valueOf("black"));
         Circle clockPivot = new Circle(this.size/2,this.size/2,(size * .06),Paint.valueOf("black"));
         Line hand1 = drawHand(1);
         Line hand2 = drawHand(2);
@@ -107,7 +109,7 @@ public class Clock extends Pane {
         timeLine.play();
     }
 
-    // Currently returns the longer of the two hand animations
+    // Returns the longer of the two hand animations
     private float calculateDuration(ClockAction action, int index) {
         // Stupid hack
         if(index == 0) {
@@ -156,19 +158,22 @@ public class Clock extends Pane {
         hand.setStartX(this.size/2);
         hand.setStartY(this.size/2);
 
-        hand.setEndX(this.size/2);
-        hand.setEndY(size*.9);
-
         if(handNum == 1) {
             this.hand1Rotation = new Rotate();
             this.hand1Rotation.pivotXProperty().bind(hand.startXProperty());
             this.hand1Rotation.pivotYProperty().bind(hand.startYProperty());
+
+            hand.setEndX((this.radius)+this.radius*Math.cos(Math.toRadians(-this.hand1Angle)));
+            hand.setEndY((this.radius)+this.radius*Math.sin(Math.toRadians(-this.hand1Angle)));
 
             hand.getTransforms().add(this.hand1Rotation);
         }else {
             this.hand2Rotation = new Rotate();
             this.hand2Rotation.pivotXProperty().bind(hand.startXProperty());
             this.hand2Rotation.pivotYProperty().bind(hand.startYProperty());
+
+            hand.setEndX((this.radius)+this.radius*Math.cos(Math.toRadians(-this.hand2Angle)));
+            hand.setEndY((this.radius)+this.radius*Math.sin(Math.toRadians(-this.hand2Angle)));
 
             hand.getTransforms().add(this.hand2Rotation);
         }
