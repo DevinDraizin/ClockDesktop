@@ -162,6 +162,9 @@ public class Clock extends Pane {
     private Line drawHand(HandNum handNum) {
         Line hand = new Line();
 
+        hand.setScaleX(.9);
+        hand.setScaleY(.9);
+
         hand.setStartX(this.size/2);
         hand.setStartY(this.size/2);
 
