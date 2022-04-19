@@ -2,6 +2,7 @@ package UI;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
@@ -95,13 +96,12 @@ public class Clock extends Pane {
         this.clockActions.clear();
     }
 
-
     public void runActions() {
-        Timeline timeLine = new Timeline();
+        SequentialTransition transition = new SequentialTransition();
         for(int i =0; i<this.clockActions.size(); i++) {
-            timeLine.getKeyFrames().add(getKeyFrameForHands(this.clockActions.get(i), this.actionDurations.get(i)));
+            transition.getChildren().add(new Timeline(getKeyFrameForHands(this.clockActions.get(i), this.actionDurations.get(i))));
         }
-        timeLine.play();
+        transition.play();
     }
 
     // Since the duration of a particular clock action depends on the ending angle of the previous action
