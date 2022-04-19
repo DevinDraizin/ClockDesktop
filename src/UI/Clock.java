@@ -79,6 +79,8 @@ public class Clock extends Pane {
         this.getChildren().addAll(clockBody, hand1, hand2, clockPivot);
     }
 
+    // Whenever an action is added to a clock we recalculate
+    // all the durations.
     public void addAction(ClockAction action) {
         this.clockActions.add(action);
         calculateDurations();
@@ -102,6 +104,8 @@ public class Clock extends Pane {
         timeLine.play();
     }
 
+    // Since the duration of a particular clock action depends on the ending angle of the previous action
+    // we calculate the animation durations for all actions as they would play in sequence.
     private void calculateDurations() {
         if(!this.clockActions.isEmpty()) {
             this.actionDurations.clear();
@@ -117,7 +121,8 @@ public class Clock extends Pane {
         }
     }
 
-    // degrees traveled / speed
+    // Calculates the duration an animation should take based on (degrees traveled / speed) for each hand
+    // and returns the larger of the two durations.
     private float calculateDuration(ClockAction action, float hand1Angle, float hand2Angle) {
         float dist1 = action.getAngle1() < 0 ? -action.getAngle1() + hand1Angle : action.getAngle1() - hand1Angle;
         float dist2 = action.getAngle2() < 0 ? -action.getAngle2() + hand2Angle : action.getAngle2() - hand2Angle;
@@ -129,7 +134,7 @@ public class Clock extends Pane {
     }
 
 
-    public KeyFrame getKeyFrameForHands(ClockAction action, float duration) {
+    private KeyFrame getKeyFrameForHands(ClockAction action, float duration) {
         return new KeyFrame(Duration.seconds(duration), e -> {
             // Normalize and update new angles for hands
             this.hand1Angle = normalizeAngle(action.getAngle1());
