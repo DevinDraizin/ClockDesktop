@@ -28,6 +28,7 @@ public class Clock extends Pane {
     private final float radius;
 
     private ArrayList<ClockAction> clockActions;
+    private ArrayList<Float> actionDurations;
 
     public enum HandNum {
         HAND1,HAND2
@@ -58,6 +59,7 @@ public class Clock extends Pane {
         this.initializeClock();
 
         this.clockActions = new ArrayList<>();
+        this.actionDurations = new ArrayList<>();
     }
 
     private void initializeClock() {
@@ -79,62 +81,65 @@ public class Clock extends Pane {
 
     public void addAction(ClockAction action) {
         this.clockActions.add(action);
+        calculateDurations();
     }
 
     public void addAllActions(ClockAction ... actions) {
         this.clockActions.addAll(Arrays.asList(actions));
+        calculateDurations();
     }
 
     public void clearActions() {
         this.clockActions.clear();
     }
 
+
     public void runActions() {
         Timeline timeLine = new Timeline();
-        for(int i=0; i<this.clockActions.size(); i++) {
-
-            final ClockAction action = this.clockActions.get(i);
-            final float duration = calculateDuration(action, i);
-
-            timeLine.getKeyFrames().add(new KeyFrame(Duration.seconds(duration), t -> {
-                getTimelineForHand(action, HandNum.HAND1).play();
-                getTimelineForHand(action, HandNum.HAND2).play();
-            }));
+        for(int i =0; i<this.clockActions.size(); i++) {
+            timeLine.getKeyFrames().add(getKeyFrameForHands(this.clockActions.get(i), this.actionDurations.get(i)));
         }
         timeLine.play();
     }
 
-    // Returns the longer of the two hand animations
-    private float calculateDuration(ClockAction action, int index) {
-        // Stupid hack because animations can't be 0 duration
-        if(index == 0) {
-            return (float).001;
+    private void calculateDurations() {
+        if(!this.clockActions.isEmpty()) {
+            this.actionDurations.clear();
+
+            float currentAngle1 = this.hand1Angle;
+            float currentAngle2 = this.hand2Angle;
+
+            for (ClockAction clockAction : clockActions) {
+                this.actionDurations.add(calculateDuration(clockAction, currentAngle1, currentAngle2));
+                currentAngle1 = clockAction.getAngle1();
+                currentAngle2 = clockAction.getAngle2();
+            }
         }
-        float duration1 = (Math.abs(this.hand1Angle - action.getAngle1()) / action.getSpeed1());
-        float duration2 = (Math.abs(this.hand1Angle - action.getAngle2()) / action.getSpeed2());
+    }
+
+    // degrees traveled / speed
+    private float calculateDuration(ClockAction action, float hand1Angle, float hand2Angle) {
+        float dist1 = action.getAngle1() < 0 ? -action.getAngle1() + hand1Angle : action.getAngle1() - hand1Angle;
+        float dist2 = action.getAngle2() < 0 ? -action.getAngle2() + hand2Angle : action.getAngle2() - hand2Angle;
+
+        float duration1 = (dist1 / action.getSpeed1());
+        float duration2 = (dist2 / action.getSpeed2());
+
         return Math.max(duration1, duration2);
     }
 
-    public Timeline getTimelineForHand(ClockAction action, HandNum hand) {
-        if(hand == HandNum.HAND1) {
-            float duration = (Math.abs(this.hand1Angle - action.getAngle1())/action.getSpeed1());
 
-            Timeline hand1Animation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(this.hand1Rotation.angleProperty(), -this.hand1Angle)),
-                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand1Rotation.angleProperty(), -action.getAngle1())));
+    public KeyFrame getKeyFrameForHands(ClockAction action, float duration) {
+        return new KeyFrame(Duration.seconds(duration), e -> {
+            // Normalize and update new angles for hands
+            this.hand1Angle = normalizeAngle(action.getAngle1());
+            this.hand2Angle = normalizeAngle(action.getAngle2());
+        } , new KeyValue(this.hand1Rotation.angleProperty(), -action.getAngle1()),
+            new KeyValue(this.hand2Rotation.angleProperty(), -action.getAngle2()));
+    }
 
-            this.hand1Angle = action.getAngle1();
-            return hand1Animation;
-        }else {
-            float duration = (Math.abs(this.hand2Angle - action.getAngle2())/action.getSpeed2());
-
-            Timeline hand2Animation = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(this.hand2Rotation.angleProperty(), -this.hand2Angle)),
-                    new KeyFrame(Duration.seconds(duration), new KeyValue(this.hand2Rotation.angleProperty(), -action.getAngle2())));
-
-            this.hand2Angle = action.getAngle2();
-            return hand2Animation;
-        }
+    private float normalizeAngle(float angle) {
+        return angle < 0 ? 360 - ((-angle) % 360) : angle%360;
     }
 
     private Circle drawCircle() {

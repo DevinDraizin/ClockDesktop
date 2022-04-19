@@ -15,17 +15,12 @@ public class ClockAction {
 
     public ClockAction(float angle1, float angle2, float speed1, float speed2) {
 
-        this.speed1 = speed1;
-        this.speed2 = speed2;
+        this.speed1 = speed1 == 0 ? (float).00001 : speed1;
+        this.speed2 = speed2 == 0 ? (float).00001 : speed2;
 
         this.angle1 = angle1;
         this.angle2 = angle2;
 
-    }
-
-    // For CW speed should be positive and for CCW negative
-    public ClockAction getActionByDuration(float duration1, float duration2, float speed1, float speed2) {
-        return new ClockAction(duration1*speed1,duration2*speed2,speed1,speed2);
     }
 
     public Float getAngle1() {

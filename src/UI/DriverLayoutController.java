@@ -13,6 +13,9 @@ public class DriverLayoutController {
 
     public void initialize() {
         initializeGridLayout();
+    }
+
+    public void startAction() {
         testClockAction();
     }
 
@@ -24,10 +27,11 @@ public class DriverLayoutController {
         }
     }
 
+
     private void testClockAction() {
-        ClockAction action1 = new ClockAction(40,-40,20,20);
-        ClockAction action2 = new ClockAction(20,-20,20,20);
-        ClockAction action3 = new ClockAction(60,-60,20,20);
+        ClockAction action1 = new ClockAction(40,0,20,20);
+        ClockAction action2 = new ClockAction(-40,0,20,20);
+        ClockAction action3 = new ClockAction(90,0,20,20);
         Clock clock = clockController.getClock(0,0);
         clock.addAllActions(action1,action2,action3);
         clock.runActions();
