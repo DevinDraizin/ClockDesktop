@@ -5,7 +5,7 @@ import javafx.scene.layout.GridPane;
 
 public class DriverLayoutController {
 
-    private GridController clockController = new GridController(90);
+    private GridController clockController = GridController.getInstance();
 
 
     @FXML
@@ -27,14 +27,27 @@ public class DriverLayoutController {
         }
     }
 
+    private void clearAllClocks() {
+        for(int i=0; i<clockController.getGridHeight(); i++) {
+            for(int j=0; j<clockController.getGridWidth(); j++) {
+                clockController.getClock(i,j).clearActions();
+            }
+        }
+    }
+
 
     private void testClockAction() {
-        ClockAction action1 = new ClockAction(40,0,20,20);
-        ClockAction action2 = new ClockAction(-40,0,20,20);
-        ClockAction action3 = new ClockAction(90,0,20,20);
-        Clock clock = clockController.getClock(0,0);
-        clock.addAllActions(action1,action2,action3);
-        clock.runActions();
+        ClockAction action1 = new ClockAction(40,-40,30,30);
+        ClockAction action2 = new ClockAction(-40,40,30,30);
+        ClockAction action3 = new ClockAction(180,0,30,30);
+        ClockAction action4 = new ClockAction(0,180,30,30);
+        for(int i=0; i<clockController.getGridHeight(); i++) {
+            for(int j=0; j<clockController.getGridWidth(); j++) {
+                clockController.getClock(i,j).addAllActions(action1,action2,action3,action4);
+                clockController.getClock(i,j).runActions();
+            }
+        }
+        clearAllClocks();
     }
 
 }

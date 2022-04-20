@@ -3,36 +3,39 @@ package UI;
 // Creates, manages, and loads clock mechanics
 public class GridController {
 
+    private static GridController gridController = null;
+
     private Clock[][] clockGrid;
-    private int gridHeight;
-    private int gridWidth;
-    private float clockSize;
+    // default params
+    private static final int gridHeight = 8;
+    private static final int gridWidth = 15;
+    private static final float clockSize = 90;
 
     public int getGridHeight() {
-        return this.gridHeight;
+        return gridHeight;
     }
 
     public int getGridWidth() {
-        return this.gridWidth;
+        return gridWidth;
     }
 
-    public GridController(int clockSize) {
-        this.clockSize = clockSize;
-        this.gridHeight = 8;
-        this.gridWidth = 15;
+    public static GridController getInstance() {
+        return gridController == null ? new GridController() : gridController;
+    }
 
-        makeGrid(gridHeight,gridWidth);
+    private GridController() {
+        makeGrid();
     }
 
     public Clock getClock(int x, int y) {
         return clockGrid[x][y];
     }
 
-    private void makeGrid(int clocksTall, int clocksWide) {
-        clockGrid = new Clock[clocksTall][clocksWide];
+    private void makeGrid() {
+        clockGrid = new Clock[gridHeight][gridWidth];
         for(int i=0; i<gridHeight; i++) {
             for(int j=0; j<gridWidth; j++) {
-                clockGrid[i][j] = new Clock(this.clockSize);
+                clockGrid[i][j] = new Clock(clockSize);
             }
         }
     }
