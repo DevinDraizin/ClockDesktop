@@ -1,23 +1,23 @@
 #clockFace {
-    -fx-fill: radial-gradient(radius 180%, #d7d5d5, derive(#c5c4c4, -30%), derive(#b7b6b6, 30%));
-    -fx-stroke: derive(#d2d1d1, -45%);
+    -fx-fill: black;
+    -fx-stroke: black;
     -fx-stroke-width: 2;
 }
 
 #hand1 {
-    -fx-stroke: derive(#2b5fc4, -5%);
-    -fx-stroke-width: 5;
+    -fx-stroke: derive(#ffffff, -5%);
+    -fx-stroke-width: 7;
     -fx-stroke-line-cap: square;
 }
 
 #hand2 {
     -fx-stroke: derive(#ffffff, -5%);
-    -fx-stroke-width: 5;
+    -fx-stroke-width: 7;
     -fx-stroke-line-cap: square;
 }
 
 
 #clockPivot {
-    -fx-fill: derive(#000000, +5%);
+    -fx-fill: derive(#ffffff, +5%);
 }
 
