@@ -1,3 +1,21 @@
+* {
+    -fx-primary : #303035;
+    -fx-secondary : #4052af;
+    -fx-primarytext : #cbc9c9;
+    -fx-bordercolor : #3749ab;
+    -fx-backgroundcolor: #2c2c2c;
+
+}
+
 .root {
-    -fx-background-color: #6b6b6b;
+    -fx-background-color: -fx-backgroundcolor;
+}
+
+.primary-button-1
+{
+    -fx-font-size: 18;
+    -fx-text-fill: -fx-primarytext;
+    -fx-background-radius: 0;
+    -fx-background-color: -fx-secondary;
+
 }
