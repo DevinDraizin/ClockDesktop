@@ -1,5 +1,6 @@
 package UI;
 
+import FileUtils.DigitUtils;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 
@@ -16,7 +17,8 @@ public class DriverLayoutController {
     }
 
     public void startAction() {
-        testClockAction();
+        //testClockAction();
+        digitsTest();
     }
 
     private void initializeGridLayout() {
@@ -48,6 +50,16 @@ public class DriverLayoutController {
             }
         }
         clearAllClocks();
+    }
+
+    private void digitsTest() {
+        DigitUtils digits = new DigitUtils();
+        for(int i=0; i<clockController.getGridHeight(); i++) {
+            for(int j=0; j<clockController.getGridWidth(); j++) {
+                clockController.getClock(i,j).addAction(digits.getAction(i,j));
+                clockController.getClock(i,j).runActions();
+            }
+        }
     }
 
 }

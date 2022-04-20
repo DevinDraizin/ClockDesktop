@@ -6,10 +6,11 @@ public class GridController {
     private static GridController gridController = null;
 
     private Clock[][] clockGrid;
+
     // default params
-    private static final int gridHeight = 8;
-    private static final int gridWidth = 15;
-    private static final float clockSize = 90;
+    private final int gridHeight = 8;
+    private final int gridWidth = 15;
+    private final float clockSize = 90;
 
     public int getGridHeight() {
         return gridHeight;

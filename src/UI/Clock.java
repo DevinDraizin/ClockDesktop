@@ -65,7 +65,7 @@ public class Clock extends Pane {
 
     private void initializeClock() {
         Circle clockBody = drawCircle();
-        Circle clockPivot = new Circle(this.size/2,this.size/2,(size * .06),Paint.valueOf("black"));
+        Circle clockPivot = new Circle(this.size/2,this.size/2,(size * .01),Paint.valueOf("black"));
         Line hand1 = drawHand(HandNum.HAND1);
         Line hand2 = drawHand(HandNum.HAND2);
 
