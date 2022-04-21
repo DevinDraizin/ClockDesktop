@@ -19,10 +19,10 @@ public class DigitUtils {
     public DigitUtils() {
         clockGrid = new ClockAction[gridController.getGridHeight()][gridController.getGridWidth()];
         createBorder();
-        addDigit(1,9);
-        addDigit(2,9);
-        addDigit(3,9);
-        addDigit(4,9);
+        addDigit(1,1);
+        addDigit(2,2);
+        addDigit(3,3);
+        addDigit(4,4);
     }
 
     public ClockAction getAction(int x, int y) {
@@ -55,6 +55,10 @@ public class DigitUtils {
         for(int i=1; i< gridController.getGridHeight()-1; i++) {
             clockGrid[i][7] = new ClockAction(-135,-135,defaultSpeed,defaultSpeed);
         }
+
+        // Colon
+        clockGrid[2][7] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+        clockGrid[5][7] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
     }
 
     private void addDigit(int pos, int digit) {
@@ -105,19 +109,104 @@ public class DigitUtils {
                 clockGrid[6][3+offset] = new ClockAction(180,90,defaultSpeed,defaultSpeed);
                 break;
             case 2:
+                clockGrid[1][1+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[1][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
+                clockGrid[1][3+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[2][2+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[3][1+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[3][2+offset] = new ClockAction(180,90,defaultSpeed,defaultSpeed);
+                clockGrid[3][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][2+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][3+offset] = new ClockAction(180,90,defaultSpeed,defaultSpeed);
+                clockGrid[5][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][2+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[5][3+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[6][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][3+offset] = new ClockAction(180,90,defaultSpeed,defaultSpeed);
                 break;
             case 3:
+                clockGrid[1][1+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[1][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
+                clockGrid[1][3+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[2][2+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[3][1+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[3][2+offset] = new ClockAction(180,90,defaultSpeed,defaultSpeed);
+                clockGrid[3][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[4][2+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][1+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][2+offset] = new ClockAction(90,180,defaultSpeed,defaultSpeed);
+                clockGrid[5][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[6][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][3+offset] = new ClockAction(180,90,defaultSpeed,defaultSpeed);
                 break;
             case 4:
+                clockGrid[1][1+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[1][2+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[1][3+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][2+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[3][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[3][2+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[3][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[4][2+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][1+offset] = new ClockAction(-135,-135,defaultSpeed,defaultSpeed);
+                clockGrid[5][2+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[6][1+offset] = new ClockAction(-135,-135,defaultSpeed,defaultSpeed);
+                clockGrid[6][2+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][3+offset] = new ClockAction(90,180,defaultSpeed,defaultSpeed);
                 break;
             case 5:
+                clockGrid[1][1+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[1][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
+                clockGrid[1][3+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][2+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][3+offset] = new ClockAction(90,180,defaultSpeed,defaultSpeed);
+                clockGrid[3][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[3][2+offset] = new ClockAction(0,90,defaultSpeed,defaultSpeed);
+                clockGrid[3][3+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[4][2+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][1+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][2+offset] = new ClockAction(90,180,defaultSpeed,defaultSpeed);
+                clockGrid[5][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[6][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][3+offset] = new ClockAction(180,90,defaultSpeed,defaultSpeed);
                 break;
             case 6:
-                for(int i=1; i<4; i++) {
-                    clockGrid[i][1+offset] = new ClockAction(-135,-135,defaultSpeed,defaultSpeed);
-                }
-                clockGrid[4][1+offset] = new ClockAction(-90,0,defaultSpeed,defaultSpeed);
-                clockGrid[5][1+offset] = new ClockAction(-90,0,defaultSpeed,defaultSpeed);
+                clockGrid[1][1+offset] = new ClockAction(0,-90,defaultSpeed,defaultSpeed);
+                clockGrid[1][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
+                clockGrid[1][3+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[2][2+offset] = new ClockAction(-90,0,defaultSpeed,defaultSpeed);
+                clockGrid[2][3+offset] = new ClockAction(90,180,defaultSpeed,defaultSpeed);
+                clockGrid[3][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[3][2+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[3][3+offset] = new ClockAction(-90,180,defaultSpeed,defaultSpeed);
+                clockGrid[4][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][2+offset] = new ClockAction(-90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][2+offset] = new ClockAction(90,90,defaultSpeed,defaultSpeed);
+                clockGrid[5][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[6][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][3+offset] = new ClockAction(180,90,defaultSpeed,defaultSpeed);
 
                 break;
             case 7:
@@ -159,24 +248,22 @@ public class DigitUtils {
                 clockGrid[1][3+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
                 clockGrid[6][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
                 clockGrid[6][3+offset] = new ClockAction(90,180,defaultSpeed,defaultSpeed);
-                for(int i=2; i<3; i++) {
+                for(int i=2; i<4; i++) {
                     clockGrid[i][1+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
                     clockGrid[i][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
                 }
-                clockGrid[3][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
-                clockGrid[4][1+offset] = new ClockAction(-135,-135,defaultSpeed,defaultSpeed);
-                clockGrid[5][1+offset] = new ClockAction(-135,-135,defaultSpeed,defaultSpeed);
-                clockGrid[6][1+offset] = new ClockAction(-135,-135,defaultSpeed,defaultSpeed);
-                clockGrid[3][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
+                clockGrid[4][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[5][1+offset] = new ClockAction(-90,0,defaultSpeed,defaultSpeed);
+                clockGrid[6][1+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
                 clockGrid[4][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
                 clockGrid[5][3+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
                 clockGrid[6][3+offset] = new ClockAction(90,180,defaultSpeed,defaultSpeed);
                 clockGrid[1][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
                 clockGrid[2][2+offset] = new ClockAction(-90,-90,defaultSpeed,defaultSpeed);
-                clockGrid[3][2+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
-                clockGrid[4][2+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
-                clockGrid[5][2+offset] = new ClockAction(90,-90,defaultSpeed,defaultSpeed);
-                clockGrid[6][2+offset] = new ClockAction(90,0,defaultSpeed,defaultSpeed);
+                clockGrid[3][2+offset] = new ClockAction(90,90,defaultSpeed,defaultSpeed);
+                clockGrid[4][2+offset] = new ClockAction(180,-90,defaultSpeed,defaultSpeed);
+                clockGrid[5][2+offset] = new ClockAction(180,90,defaultSpeed,defaultSpeed);
+                clockGrid[6][2+offset] = new ClockAction(180,0,defaultSpeed,defaultSpeed);
                 break;
 
         }
