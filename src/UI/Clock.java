@@ -130,7 +130,7 @@ public class Clock extends Pane {
         float duration1 = (dist1 / action.getSpeed1());
         float duration2 = (dist2 / action.getSpeed2());
 
-        return Math.max(duration1, duration2);
+        return Math.max(Math.abs(duration1), Math.abs(duration2));
     }
 
 
