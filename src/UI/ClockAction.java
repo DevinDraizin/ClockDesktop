@@ -15,6 +15,7 @@ public class ClockAction {
 
     public ClockAction(float angle1, float angle2, float speed1, float speed2) {
 
+        // 0 speed is converted to practically 0 to prevent divide errors
         this.speed1 = speed1 == 0 ? (float).00001 : speed1;
         this.speed2 = speed2 == 0 ? (float).00001 : speed2;
 

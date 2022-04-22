@@ -16,17 +16,26 @@ public class DigitUtils {
     private ClockAction[][] clockGrid;
     private GridController gridController = GridController.getInstance();
 
-    public DigitUtils() {
+    public DigitUtils(int num) {
         clockGrid = new ClockAction[gridController.getGridHeight()][gridController.getGridWidth()];
         createBorder();
-        addDigit(1,1);
-        addDigit(2,2);
-        addDigit(3,3);
-        addDigit(4,4);
+        printNumber(num);
+
     }
 
     public ClockAction getAction(int x, int y) {
         return clockGrid[x][y];
+    }
+
+    public void printNumber(int num) {
+        if(num < 0 || num > 9999) {
+            return;
+        }
+
+        for(int i=4; i>0; i--) {
+            addDigit(i,num%10);
+            num /= 10;
+        }
     }
 
     private void createBorder() {

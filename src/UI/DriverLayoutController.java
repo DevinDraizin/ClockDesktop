@@ -18,7 +18,7 @@ public class DriverLayoutController {
 
     public void startAction() {
         //testClockAction();
-        digitsTest();
+        setDigitalClock(2849);
     }
 
     private void initializeGridLayout() {
@@ -52,8 +52,8 @@ public class DriverLayoutController {
         clearAllClocks();
     }
 
-    private void digitsTest() {
-        DigitUtils digits = new DigitUtils();
+    private void setDigitalClock(int num) {
+        DigitUtils digits = new DigitUtils(num);
         for(int i=0; i<clockController.getGridHeight(); i++) {
             for(int j=0; j<clockController.getGridWidth(); j++) {
                 clockController.getClock(i,j).addAction(digits.getAction(i,j));

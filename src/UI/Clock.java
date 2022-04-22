@@ -102,6 +102,8 @@ public class Clock extends Pane {
             transition.getChildren().add(new Timeline(getKeyFrameForHands(this.clockActions.get(i), this.actionDurations.get(i))));
         }
         transition.play();
+        // Work method of pausing transition between actions
+        //transition.stop();
     }
 
     // Since the duration of a particular clock action depends on the ending angle of the previous action
