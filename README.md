@@ -82,4 +82,5 @@ reverse the current direction.
 ***
 ### Dependencies
 * [JFoenix](http://www.jfoenix.com/) - Material Design UI components
-* [GSon](https://github.com/google/gson) - JSON parsing
+* [Jackson Core](https://github.com/FasterXML/jackson) - YAML Parsing
+* [Jackson YAML](https://github.com/FasterXML/jackson) - YAML Parsing
