@@ -3,14 +3,9 @@ package FileUtils;
 import UI.ClockAction;
 import UI.GridController;
 
-// This is a class that will be able to load in all the possible digits for a clock including the border and
-// minute/hour divider. The idea is to create a yaml format that is modular enough to allow this class to
-// construct any time representation on the fly by figuring out the positions. Since Jackson seems to only
-// care that the yaml structure matches the object you are trying to create from it, we might as well create
-// a completely separate format just for digits.
-//
-// All digits fit inside a 3x6 grid of clocks. A time representation for now will just be a single action sent to each
-// clock instructing it to go to the correct position. So we can start out with a grid
+// Build builds digits 0-9 in the first position. Then we define an offset for the other 3 positions.
+// Now we can display any digits in any position. This class also provides wrappers to sanitize and
+// display time formats.
 public class DigitUtils {
 
     private ClockAction[][] clockGrid;
