@@ -21,6 +21,22 @@ public class DriverLayoutController {
         setDigitalClock(2849);
     }
 
+    public void pauseActions() {
+        for(int i=0; i<clockController.getGridHeight(); i++) {
+            for(int j=0; j<clockController.getGridWidth(); j++) {
+                clockController.getClock(i,j).pauseActions();
+            }
+        }
+    }
+
+    public void resumeActions() {
+        for(int i=0; i<clockController.getGridHeight(); i++) {
+            for(int j=0; j<clockController.getGridWidth(); j++) {
+                clockController.getClock(i,j).resumeActions();
+            }
+        }
+    }
+
     private void initializeGridLayout() {
         for(int i=0; i<clockController.getGridHeight(); i++) {
             for(int j=0; j<clockController.getGridWidth(); j++) {

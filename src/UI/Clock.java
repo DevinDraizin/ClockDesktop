@@ -13,6 +13,8 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 // JavaFX Node class, and it's children (including Pane) all inherit a coordinate system where
 // the y-axis is inverted from the traditional cartesian plane. We are operating in the 4th
@@ -28,8 +30,12 @@ public class Clock extends Pane {
     private final float size;
     private final float radius;
 
+    private volatile boolean running;
+
     private ArrayList<ClockAction> clockActions;
     private ArrayList<Float> actionDurations;
+
+    private SequentialTransition animation;
 
     public enum HandNum {
         HAND1,HAND2
@@ -61,6 +67,7 @@ public class Clock extends Pane {
 
         this.clockActions = new ArrayList<>();
         this.actionDurations = new ArrayList<>();
+        this.animation = new SequentialTransition();
     }
 
     private void initializeClock() {
@@ -97,13 +104,39 @@ public class Clock extends Pane {
     }
 
     public void runActions() {
-        SequentialTransition transition = new SequentialTransition();
+
         for(int i =0; i<this.clockActions.size(); i++) {
-            transition.getChildren().add(new Timeline(getKeyFrameForHands(this.clockActions.get(i), this.actionDurations.get(i))));
+            animation.getChildren().add(new Timeline(getKeyFrameForHands(this.clockActions.get(i), this.actionDurations.get(i))));
         }
-        transition.play();
-        // Work method of pausing transition between actions
-        //transition.stop();
+        animation.playFromStart();
+        this.running = true;
+    }
+
+    public void pauseActions(double seconds) {
+        this.animation.stop();
+        this.running = false;
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                animation.play();
+                running = true;
+            }
+        }, (long) (seconds*1000));
+    }
+
+    public void pauseActions() {
+        if(this.running) {
+            this.animation.stop();
+            this.running = false;
+        }
+    }
+
+    public void resumeActions() {
+        if(!this.running) {
+            this.animation.play();
+            this.running = true;
+        }
     }
 
     // Since the duration of a particular clock action depends on the ending angle of the previous action
