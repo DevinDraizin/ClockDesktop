@@ -3,6 +3,7 @@ package UI;
 import FileUtils.DigitUtils;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 public class DriverLayoutController {
 
@@ -17,8 +18,10 @@ public class DriverLayoutController {
     }
 
     public void startAction() {
-        //testClockAction();
         setDigitalClock(2849);
+        setDigitalClock(2850);
+        setDigitalClock(2851);
+        runAllClocks();
     }
 
     public void pauseActions() {
@@ -45,6 +48,7 @@ public class DriverLayoutController {
         }
     }
 
+
     private void clearAllClocks() {
         for(int i=0; i<clockController.getGridHeight(); i++) {
             for(int j=0; j<clockController.getGridWidth(); j++) {
@@ -53,27 +57,29 @@ public class DriverLayoutController {
         }
     }
 
-
-    private void testClockAction() {
-        ClockAction action1 = new ClockAction(40,-40,30,30);
-        ClockAction action2 = new ClockAction(-40,40,30,30);
-        ClockAction action3 = new ClockAction(180,0,30,30);
-        ClockAction action4 = new ClockAction(0,180,30,30);
+    private void runAllClocks() {
         for(int i=0; i<clockController.getGridHeight(); i++) {
             for(int j=0; j<clockController.getGridWidth(); j++) {
-                clockController.getClock(i,j).addAllActions(action1,action2,action3,action4);
                 clockController.getClock(i,j).runActions();
             }
         }
-        clearAllClocks();
     }
 
+    private void setAllClocks(ClockAction action) {
+        for(int i=0; i<clockController.getGridHeight(); i++) {
+            for(int j=0; j<clockController.getGridWidth(); j++) {
+                clockController.getClock(i,j).addAction(action);
+            }
+        }
+    }
+
+
+
     private void setDigitalClock(int num) {
-        DigitUtils digits = new DigitUtils(num);
+        DigitUtils digits = new DigitUtils(num, Duration.seconds(5));
         for(int i=0; i<clockController.getGridHeight(); i++) {
             for(int j=0; j<clockController.getGridWidth(); j++) {
                 clockController.getClock(i,j).addAction(digits.getAction(i,j));
-                clockController.getClock(i,j).runActions();
             }
         }
     }

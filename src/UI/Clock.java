@@ -1,9 +1,6 @@
 package UI;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -11,10 +8,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 // JavaFX Node class, and it's children (including Pane) all inherit a coordinate system where
 // the y-axis is inverted from the traditional cartesian plane. We are operating in the 4th
@@ -103,10 +97,17 @@ public class Clock extends Pane {
         this.clockActions.clear();
     }
 
+    public List<ClockAction> getClockActionsUnmodifiable() {
+        return Collections.unmodifiableList(this.clockActions);
+    }
+
     public void runActions() {
 
         for(int i =0; i<this.clockActions.size(); i++) {
             animation.getChildren().add(new Timeline(getKeyFrameForHands(this.clockActions.get(i), this.actionDurations.get(i))));
+            if(this.clockActions.get(i).getDelay().greaterThan(Duration.ZERO)) {
+                animation.getChildren().add(new PauseTransition(this.clockActions.get(i).getDelay()));
+            }
         }
         animation.playFromStart();
         this.running = true;

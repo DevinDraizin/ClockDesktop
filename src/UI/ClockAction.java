@@ -1,5 +1,7 @@
 package UI;
 
+import javafx.util.Duration;
+
 // Defines a complete action from start to finish.
 // Multiple actions should be able to be composed sequentially
 public class ClockAction {
@@ -12,8 +14,10 @@ public class ClockAction {
     private final Float speed1;
     private final Float speed2;
 
+    // Defines how long to pause after this action is completed
+    private final Duration delay;
 
-    public ClockAction(float angle1, float angle2, float speed1, float speed2) {
+    public ClockAction(float angle1, float angle2, float speed1, float speed2, Duration delay) {
 
         // 0 speed is converted to practically 0 to prevent divide errors
         this.speed1 = speed1 == 0 ? (float).00001 : speed1;
@@ -22,6 +26,7 @@ public class ClockAction {
         this.angle1 = angle1;
         this.angle2 = angle2;
 
+        this.delay = delay;
     }
 
     public Float getAngle1() {
@@ -38,5 +43,9 @@ public class ClockAction {
 
     public Float getSpeed2() {
         return speed2;
+    }
+
+    public Duration getDelay() {
+        return delay;
     }
 }
