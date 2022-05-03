@@ -36,7 +36,6 @@ public class Clock extends Pane {
     private ArrayList<Float> actionDurations;
 
     private SequentialTransition animation;
-    private Duration currentTime;
 
     public enum HandNum {
         HAND1,HAND2
@@ -111,19 +110,6 @@ public class Clock extends Pane {
         }
         animation.playFromStart();
         this.running = true;
-    }
-
-    public void pauseActions(double seconds) {
-        this.animation.stop();
-        this.running = false;
-
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            public void run() {
-                animation.play();
-                running = true;
-            }
-        }, (long) (seconds*1000));
     }
 
     public void pauseActions() {
