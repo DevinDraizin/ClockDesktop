@@ -101,6 +101,10 @@ public class Clock extends Pane {
         return Collections.unmodifiableList(this.clockActions);
     }
 
+    public Duration getAnimationDuration() {
+        return this.animation.getTotalDuration();
+    }
+
     public void runActions() {
 
         for(int i =0; i<this.clockActions.size(); i++) {
@@ -150,8 +154,8 @@ public class Clock extends Pane {
         float dist1 = action.getAngle1() < 0 ? -action.getAngle1() + hand1Angle : action.getAngle1() - hand1Angle;
         float dist2 = action.getAngle2() < 0 ? -action.getAngle2() + hand2Angle : action.getAngle2() - hand2Angle;
 
-        float duration1 = (dist1 / action.getSpeed1());
-        float duration2 = (dist2 / action.getSpeed2());
+        float duration1 = (dist1 / action.getSpeed());
+        float duration2 = (dist2 / action.getSpeed());
 
         return Math.max(Math.abs(duration1), Math.abs(duration2));
     }

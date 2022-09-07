@@ -11,17 +11,15 @@ public class ClockAction {
     private final Float angle2;
 
     // Measured in degrees per second
-    private final Float speed1;
-    private final Float speed2;
+    private final Float speed;
 
     // Defines how long to pause after this action is completed
     private final Duration delay;
 
-    public ClockAction(float angle1, float angle2, float speed1, float speed2, Duration delay) {
+    public ClockAction(float angle1, float angle2, float speed, Duration delay) {
 
         // 0 speed is converted to practically 0 to prevent divide errors
-        this.speed1 = speed1 == 0 ? (float).00001 : speed1;
-        this.speed2 = speed2 == 0 ? (float).00001 : speed2;
+        this.speed = speed == 0 ? (float).00001 : speed;
 
         this.angle1 = angle1;
         this.angle2 = angle2;
@@ -37,12 +35,8 @@ public class ClockAction {
         return angle2;
     }
 
-    public Float getSpeed1() {
-        return speed1;
-    }
-
-    public Float getSpeed2() {
-        return speed2;
+    public Float getSpeed() {
+        return speed;
     }
 
     public Duration getDelay() {
